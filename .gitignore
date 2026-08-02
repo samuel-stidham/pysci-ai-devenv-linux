@@ -11,7 +11,8 @@
 
 # python bytecode
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 
 # Environment files
 .env
@@ -21,3 +22,37 @@ __pycache__/
 .ipynb_checkpoints/
 .virtual_documents/
 *.ipynb
+
+# packaging artifacts (build, twine)
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+MANIFEST
+pip-log.txt
+pip-delete-this-directory.txt
+
+# compiled extensions built in-tree (cython, pybind11)
+*.so
+cython_debug/
+
+# test and coverage caches (pytest, pytest-cov)
+.pytest_cache/
+.tox/
+.nox/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# linter and type checker caches (ruff, mypy)
+.ruff_cache/
+.mypy_cache/
+.pyre/
+.pytype/
+
+# stray pyenv pin. devenv.nix owns the interpreter version, a
+# .python-version file would only fight it.
+.python-version
