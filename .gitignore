@@ -1,0 +1,23 @@
+# devenv build state and generated flake
+.devenv/
+.devenv.flake.nix
+
+# python virtualenv (devenv creates one under .devenv state, but a manual
+# .venv from uv or poetry can also land here)
+.venv/
+
+# direnv cache
+.direnv/
+
+# python bytecode
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+.envrc
+
+# Jupyter Lab
+.ipynb_checkpoints/
+.virtual_documents/
+*.ipynb

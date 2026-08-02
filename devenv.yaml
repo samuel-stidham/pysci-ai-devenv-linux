@@ -1,0 +1,16 @@
+# Inputs and global Nix settings for the pysci-ai devenv.
+#
+# nixpkgs tracks unstable so current CUDA 13.x, cuDNN, and recent
+# native libraries are available. nixpkgs-python supplies exact CPython
+# builds, which is what lets languages.python.version pin 3.13 (or 3.14)
+# precisely rather than taking whatever CPython nixpkgs happens to ship.
+# allowUnfree is mandatory: the CUDA toolkit and cuDNN are unfree.
+inputs:
+  nixpkgs:
+    url: github:NixOS/nixpkgs/nixpkgs-unstable
+  nixpkgs-python:
+    url: github:cachix/nixpkgs-python
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
+allowUnfree: true
