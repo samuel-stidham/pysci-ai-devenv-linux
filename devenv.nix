@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, inputs, ... }:
 
 let
   # ── PYTHON VERSION ─────────────────────────────────────────────────
@@ -38,7 +38,7 @@ let
 in
 {
   # Build toolchain plus the two Python project managers. uv and poetry
-  # live here, NOT in requirements.txt, on purpose. This devenv shell is
+  # live here, NOT in the pip requirements, on purpose. This devenv shell is
   # the fat base environment holding every scientific and AI library. An
   # individual project created inside it uses uv or poetry with a portable
   # lockfile, so the project reproduces with `uv sync` or `poetry install`
@@ -53,8 +53,8 @@ in
     uv
     poetry
 
-    # JVM for the kotlin-jupyter-kernel in requirements.txt. That kernel is a
-    # pip package that shells out to `java`, and it found one before this line
+    # JVM for the kotlin-jupyter-kernel in the core requirements. That kernel is
+    # a pip package that shells out to `java`, and it found one before this line
     # existed: /home/…/.nix-profile/bin/java, temurin 21.0.11, leaking in from
     # the home-manager user profile. Working by accident is the problem. This
     # shell claims to be self-contained, and on any machine without that
@@ -75,12 +75,23 @@ in
     manylinux.enable = true;
 
     # The base environment. devenv creates the venv under $DEVENV_STATE,
-    # activates it on shell entry, and runs pip against requirements.txt.
-    # It tracks a checksum of the file and the interpreter, so pip only
-    # reruns when one of them actually changes.
+    # activates it on shell entry, and runs pip against the requirements
+    # below. It tracks a checksum of the content and the interpreter, so
+    # pip only reruns when one of them actually changes.
+    #
+    # The package lists live in the pysci-core input, split into a
+    # cross-platform core plus one small delta per platform. The local
+    # requirements.txt is gone so there is no second place to edit and
+    # nothing to drift. Change packages over there, then `devenv update`
+    # here pulls the new pin. The concatenation is plain string glue:
+    # pip reads the core list, then the Linux delta carrying the cu130
+    # index line and the -gpu wheel variants.
     venv = {
       enable = true;
-      requirements = ./requirements.txt;
+      requirements =
+        builtins.readFile "${inputs.pysci-core}/requirements-core.txt"
+        + "\n"
+        + builtins.readFile "${inputs.pysci-core}/requirements-linux.txt";
     };
   };
 

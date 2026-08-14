@@ -70,11 +70,28 @@
         "type": "github"
       }
     },
+    "pysci-core": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1786665726,
+        "narHash": "sha256-tqo1a3/d3pE4ncL+lbc8ZjH7CRPhKyHuqCWurdNQC0w=",
+        "ref": "refs/heads/main",
+        "rev": "108a4134b579b5350f35add7c3773b330e1d6cc4",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/samuel-stidham/pysci-ai-core-packages.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/samuel-stidham/pysci-ai-core-packages.git"
+      }
+    },
     "root": {
       "inputs": {
         "devenv": "devenv",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-python": "nixpkgs-python"
+        "nixpkgs-python": "nixpkgs-python",
+        "pysci-core": "pysci-core"
       }
     }
   },

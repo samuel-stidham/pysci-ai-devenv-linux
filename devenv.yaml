@@ -13,4 +13,12 @@ inputs:
     inputs:
       nixpkgs:
         follows: nixpkgs
+  # Shared package lists, one repo for both machines, so the Linux and
+  # macOS environments cannot drift package by package. Locked in
+  # devenv.lock like every other input. `devenv update` pulls the
+  # latest lists. git+ssh because the fetch rides the same ssh key the
+  # git remotes already use.
+  pysci-core:
+    url: git+ssh://git@github.com/samuel-stidham/pysci-ai-core-packages.git
+    flake: false
 allowUnfree: true
